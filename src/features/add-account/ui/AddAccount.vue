@@ -8,7 +8,7 @@ const { addDraftAccount } = accountsStore;
 </script>
 
 <template>
-  <div class="flex items-center justify-start gap-4">
+  <div class="flex items-center justify-center gap-4 w-full my-2">
     <div class="text-xl font-medium">Учетные Записи</div>
     <Button
       variant="outline"
