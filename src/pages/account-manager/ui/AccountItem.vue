@@ -19,7 +19,7 @@ interface IAccountFormProps {
 }
 
 const props = defineProps<IAccountFormProps>();
-const emmit = defineEmits(["saveAccount"]);
+const emmit = defineEmits(["saveAccount", "editAccount"]);
 
 const schema = getAccountSchema(props.account);
 
@@ -35,9 +35,16 @@ watch(
   () => form.values,
   async () => {
     const { valid } = await form.validate();
-    if (valid) {
-      emmit("saveAccount", { id: props.account.id, ...form.values });
+    if (!valid) return;
+
+    if (props.account.isDirty) {
+      return emmit("saveAccount", {
+        id: props.account.id,
+        isDirty: false,
+        ...form.values,
+      });
     }
+    emmit("editAccount", { ...props.account, ...form.values });
   },
   {
     deep: true,

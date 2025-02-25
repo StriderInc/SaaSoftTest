@@ -22,6 +22,7 @@ export const useAccountsStore = defineStore("accounts", () => {
             recordType: "Локальная",
             login: "1234",
             password: "qwer",
+            isDirty: false,
           },
           {
             id: uuidv4(),
@@ -29,6 +30,7 @@ export const useAccountsStore = defineStore("accounts", () => {
             recordType: "LDAP",
             login: "2345",
             password: "wert",
+            isDirty: false,
           },
         ],
   );
@@ -46,17 +48,28 @@ export const useAccountsStore = defineStore("accounts", () => {
     });
   };
 
-  const saveAccount = (newAccount: IAccount) => {
-    const filterAccount = accountsData.value.filter(item => !item.isDirty);
-    localStorage.setItem(
-      "accountsData",
-      JSON.stringify([...filterAccount, newAccount]),
+  const commitAccount = (account: IAccount) => {
+    accountsData.value = accountsData.value.map(oldAccount =>
+      oldAccount.id === account.id ? account : oldAccount,
     );
+    const savedAccounts = accountsData.value.filter(
+      account => !account.isDirty,
+    );
+    localStorage.setItem("accountsData", JSON.stringify(savedAccounts));
+  };
+
+  const saveAccount = (newAccount: IAccount) => {
+    commitAccount(newAccount);
+  };
+
+  const editAccount = (updatedAccount: IAccount) => {
+    commitAccount(updatedAccount);
   };
 
   return {
     accounts,
     addAccount,
     saveAccount,
+    editAccount,
   };
 });
