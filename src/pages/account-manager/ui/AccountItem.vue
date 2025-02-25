@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { DeleteAccount } from "@features/delete-account";
 import type { IAccount } from "@entities/account";
 import {
   AutoForm,
   AutoFormField,
   type Config,
 } from "@shared/ui/shadcn/auto-form";
-import { Trash2 } from "lucide-vue-next";
 
 import { fieldConfig } from "../config/fieldConfig";
 import { getAccountSchema } from "../config/schema";
@@ -18,7 +18,7 @@ interface IAccountFormProps {
 }
 
 const props = defineProps<IAccountFormProps>();
-const emmit = defineEmits(["saveAccount", "editAccount"]);
+const emmit = defineEmits(["saveAccount", "editAccount", "deleteAccount"]);
 
 const schema = getAccountSchema(props.account);
 
@@ -46,6 +46,10 @@ const handleCheckField = async () => {
   }
   const editedAccount = { ...props.account, ...form.values };
   emmit("editAccount", editedAccount);
+};
+
+const handleDeleteAccount = (deletedId: string) => {
+  emmit("deleteAccount", deletedId);
 };
 </script>
 
@@ -81,7 +85,7 @@ const handleCheckField = async () => {
             @blur="handleCheckField"
           />
         </div>
-        <Trash2 class="cursor-pointer self-center" />
+        <DeleteAccount @delete-account="handleDeleteAccount(account.id)" />
       </div>
     </template>
   </AutoForm>
