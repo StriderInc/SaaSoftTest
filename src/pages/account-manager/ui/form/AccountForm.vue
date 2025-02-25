@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import type { IAccount } from "@entities/account";
+import { AutoForm } from "@shared/ui/shadcn/auto-form";
 
-interface AccountFormProps {
+interface IAccountFormProps {
   account: IAccount;
 }
 
-defineProps<AccountFormProps>();
+defineProps<IAccountFormProps>();
 </script>
 
 <template>
+  <AutoForm schema=""> </AutoForm>
   <div>
     {{ account.tag }}
   </div>
