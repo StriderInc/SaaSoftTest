@@ -9,5 +9,7 @@ export const getAccountSchema = (account: IAccount) =>
       .enum(["Локальная", "LDAP"])
       .default(account.recordType as "Локальная" | "LDAP"),
     login: z.string().min(1).default(account.login),
-    password: z.string().min(1).nullish().default(account.password),
+    password: z.string().min(1).nullish().default(account.password)
+  }).refine(data => !(!data.password && data.recordType === 'Локальная'), {
+    path: ['password'],
   });

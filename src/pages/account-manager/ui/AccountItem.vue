@@ -30,11 +30,9 @@ const handleCheckField = async () => {
 
   const { valid } = await form.validate();
   if (!valid) return;
-
+  console.log(form);
   if (form.values.recordType === "LDAP") {
     form.setFieldValue("password", null);
-  } else if (!form.values.password) {
-    return form.setFieldError("password", "err");
   }
 
   if (props.account.isDirty) {
