@@ -31,9 +31,6 @@ export const useAccountsStore = defineStore("accounts", () => {
   };
 
   const commitAccount = (account: IAccount) => {
-    if (account.recordType === "LDAP") {
-      account.password = null;
-    }
     accountsData.value = accountsData.value.map(oldAccount =>
       oldAccount.id === account.id ? account : oldAccount,
     );
