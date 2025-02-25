@@ -35,7 +35,9 @@ const toggleShowPassword = () => (passwordIsShow.value = !passwordIsShow.value);
           :class="{
             'border-red-500': slotProps.errors.length,
             'pr-[40px]': true
-          }" />
+          }"
+          autocomplete="new-password"
+        />
         <div
           @click.stop.prevent="toggleShowPassword"
           class="absolute right-[10px] top-[10px] cursor-pointer select-none"

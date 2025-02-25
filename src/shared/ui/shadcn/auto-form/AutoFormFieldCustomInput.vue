@@ -25,7 +25,7 @@ defineProps<FieldProps>();
           :class="{
             'border-red-500': slotProps.errors.length,
           }"
-          autocomplete="off"
+          autocomplete="new-password"
         />
       </FormControl>
     </FormItem>

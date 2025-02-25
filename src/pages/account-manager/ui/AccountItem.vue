@@ -27,14 +27,15 @@ const form = useForm({
 });
 
 const handleCheckField = async () => {
+
+  const { valid } = await form.validate();
+  if (!valid) return;
+
   if (form.values.recordType === "LDAP") {
     form.setFieldValue("password", null);
   } else if (!form.values.password) {
     return form.setFieldError("password", "err");
   }
-
-  const { valid } = await form.validate();
-  if (!valid) return;
 
   if (props.account.isDirty) {
     const savedAccount = {
@@ -79,7 +80,7 @@ const handleDeleteAccount = (deletedId: string) => {
           }"
           @blur="handleCheckField"
         />
-        <div v-if="form.values.recordType !== 'LDAP'">
+        <div v-show="form.values.recordType !== 'LDAP'">
           <AutoFormField
             v-bind="fields.password"
             @blur="handleCheckField"
