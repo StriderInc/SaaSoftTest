@@ -31,6 +31,9 @@ export const useAccountsStore = defineStore("accounts", () => {
   };
 
   const commitAccount = (account: IAccount) => {
+    if (account.recordType === "LDAP") {
+      account.password = null;
+    }
     accountsData.value = accountsData.value.map(oldAccount =>
       oldAccount.id === account.id ? account : oldAccount,
     );
@@ -41,11 +44,13 @@ export const useAccountsStore = defineStore("accounts", () => {
   };
 
   const saveAccount = (newAccount: IAccount) => {
+    console.log("saveAccount");
     commitAccount(newAccount);
   };
 
-  const editAccount = (updatedAccount: IAccount) => {
-    commitAccount(updatedAccount);
+  const editAccount = (editedAccount: IAccount) => {
+    console.log("editAccount");
+    commitAccount(editedAccount);
   };
 
   return {

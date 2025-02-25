@@ -12,5 +12,6 @@ export const getAccountSchema = (account: IAccount) =>
     password: z
       .string()
       .min(1)
-      .default(account.password as string),
+      .default(account.password || "")
+      .nullish(),
   });

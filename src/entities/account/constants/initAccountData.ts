@@ -1,6 +1,7 @@
+import type { IAccount } from "../model/types";
 import { v4 as uuidv4 } from "uuid";
 
-export const defaultAccountData = [
+export const defaultAccountData: IAccount[] = [
   {
     id: uuidv4(),
     tag: "TAG1",
@@ -14,7 +15,7 @@ export const defaultAccountData = [
     tag: "TAG2",
     recordType: "LDAP",
     login: "2345",
-    password: "wert",
+    password: null,
     isDirty: false,
   },
 ];

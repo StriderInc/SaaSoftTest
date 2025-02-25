@@ -36,15 +36,21 @@ watch(
   async () => {
     const { valid } = await form.validate();
     if (!valid) return;
-
+    if (form.values.recordType === "LDAP") {
+      form.values.password = null;
+    } else if (!form.values.password) {
+      return form.setFieldError("password", "err");
+    }
     if (props.account.isDirty) {
-      return emmit("saveAccount", {
+      const savedAccount = {
         id: props.account.id,
         isDirty: false,
         ...form.values,
-      });
+      };
+      return emmit("saveAccount", savedAccount);
     }
-    emmit("editAccount", { ...props.account, ...form.values });
+    const editedAccount = { ...props.account, ...form.values };
+    emmit("editAccount", editedAccount);
   },
   {
     deep: true,
@@ -69,10 +75,9 @@ watch(
             'col-span-2': form.values.recordType === 'LDAP',
           }"
         />
-        <AutoFormField
-          v-if="form.values.recordType !== 'LDAP'"
-          v-bind="fields.password"
-        />
+        <div v-if="form.values.recordType !== 'LDAP'">
+          <AutoFormField v-bind="fields.password" />
+        </div>
       </div>
     </template>
   </AutoForm>
