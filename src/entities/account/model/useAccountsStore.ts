@@ -5,31 +5,38 @@ import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
 
 export const useAccountsStore = defineStore("accounts", () => {
-  const savedAccounts = ref<IAccount[]>([
-    {
-      id: uuidv4(),
-      tag: "TAG1",
-      recordType: "Локальная",
-      login: "1234",
-      password: "qwer",
-    },
-    {
-      id: uuidv4(),
-      tag: "TAG2",
-      recordType: "LDAP",
-      login: "2345",
-      password: "wert",
-    },
-  ]);
-  const draftAccounts = ref<IAccount[]>([]);
+  const getAccountsFromLocalStorage = (): IAccount[] => {
+    const storedAccounts = localStorage.getItem("accountsData");
+    return storedAccounts ? JSON.parse(storedAccounts) : [];
+  };
 
-  const allAccounts = computed(() => [
-    ...savedAccounts.value,
-    ...draftAccounts.value,
-  ]);
+  const initialAccounts = getAccountsFromLocalStorage();
 
-  const addDraftAccount = () => {
-    draftAccounts.value.push({
+  const accountsData = ref<IAccount[]>(
+    initialAccounts.length > 0
+      ? initialAccounts
+      : [
+          {
+            id: uuidv4(),
+            tag: "TAG1",
+            recordType: "Локальная",
+            login: "1234",
+            password: "qwer",
+          },
+          {
+            id: uuidv4(),
+            tag: "TAG2",
+            recordType: "LDAP",
+            login: "2345",
+            password: "wert",
+          },
+        ],
+  );
+
+  const accounts = computed(() => accountsData.value);
+
+  const addAccount = () => {
+    accountsData.value.push({
       id: uuidv4(),
       tag: "",
       recordType: "",
@@ -38,8 +45,16 @@ export const useAccountsStore = defineStore("accounts", () => {
     });
   };
 
+  const addAccountToStorage = (newAccount: IAccount) => {
+    localStorage.setItem(
+      "accountsData",
+      JSON.stringify([...accountsData.value, newAccount]),
+    );
+  };
+
   return {
-    allAccounts,
-    addDraftAccount,
+    accounts,
+    addAccount,
+    addAccountToStorage,
   };
 });
