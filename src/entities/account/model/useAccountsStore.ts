@@ -1,5 +1,6 @@
 import { computed, ref } from "vue";
 
+import { defaultAccountData } from "../constants/initAccountData";
 import type { IAccount } from "./types";
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
@@ -13,26 +14,7 @@ export const useAccountsStore = defineStore("accounts", () => {
   const initialAccounts = getAccountsFromLocalStorage();
 
   const accountsData = ref<IAccount[]>(
-    initialAccounts.length > 0
-      ? initialAccounts
-      : [
-          {
-            id: uuidv4(),
-            tag: "TAG1",
-            recordType: "Локальная",
-            login: "1234",
-            password: "qwer",
-            isDirty: false,
-          },
-          {
-            id: uuidv4(),
-            tag: "TAG2",
-            recordType: "LDAP",
-            login: "2345",
-            password: "wert",
-            isDirty: false,
-          },
-        ],
+    initialAccounts.length > 0 ? initialAccounts : defaultAccountData,
   );
 
   const accounts = computed(() => accountsData.value);
