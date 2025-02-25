@@ -5,6 +5,7 @@ import {
   AutoFormField,
   type Config,
 } from "@shared/ui/shadcn/auto-form";
+import { Trash2 } from "lucide-vue-next";
 
 import { fieldConfig } from "../config/fieldConfig";
 import { getAccountSchema } from "../config/schema";
@@ -56,7 +57,9 @@ const handleCheckField = async () => {
     :field-config="fieldConfig as Config<z.infer<typeof schema>>"
   >
     <template #customAutoForm="{ fields }">
-      <div class="grid grid-cols-4 grid-rows-[auto_1fr] gap-[10px] w-[50%]">
+      <div
+        class="grid grid-cols-[1fr_1fr_1fr_1fr_max-content] grid-rows-[auto_1fr] gap-[10px] w-[50%]"
+      >
         <AutoFormField
           v-bind="fields.tag"
           @blur="handleCheckField"
@@ -78,6 +81,7 @@ const handleCheckField = async () => {
             @blur="handleCheckField"
           />
         </div>
+        <Trash2 class="cursor-pointer self-center" />
       </div>
     </template>
   </AutoForm>
