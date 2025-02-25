@@ -14,5 +14,3 @@ export const getAccountSchema = (account: IAccount) =>
       .min(1)
       .default(account.password as string),
   });
-
-export type AccountZodValues = z.infer<ReturnType<typeof getAccountSchema>>;
