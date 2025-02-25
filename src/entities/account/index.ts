@@ -1,2 +1,2 @@
-export type { IAccount } from "./model/types";
+export * from "./model/types";
 export { useAccountsStore } from "./model/useAccountsStore";
