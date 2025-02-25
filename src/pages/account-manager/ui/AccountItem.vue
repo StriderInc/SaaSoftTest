@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { watch } from "vue";
-
 import type { IAccount } from "@entities/account";
 import {
   AutoForm,
@@ -27,37 +25,27 @@ const form = useForm({
   validationSchema: toTypedSchema(schema),
 });
 
-watch(
-  () => form.meta.value.touched,
-  () => form.validate(),
-);
-watch(
-  () => form.values,
-  async () => {
-    const { valid } = await form.validate();
-    if (!valid) return;
+const handleCheckField = async () => {
+  if (form.values.recordType === "LDAP") {
+    form.setFieldValue("password", null);
+  } else if (!form.values.password) {
+    return form.setFieldError("password", "err");
+  }
 
-    if (form.values.recordType === "LDAP") {
-      form.values.password = null;
-    } else if (!form.values.password) {
-      return form.setFieldError("password", "err");
-    }
+  const { valid } = await form.validate();
+  if (!valid) return;
 
-    if (props.account.isDirty) {
-      const savedAccount = {
-        id: props.account.id,
-        isDirty: false,
-        ...form.values,
-      };
-      return emmit("saveAccount", savedAccount);
-    }
-    const editedAccount = { ...props.account, ...form.values };
-    emmit("editAccount", editedAccount);
-  },
-  {
-    deep: true,
-  },
-);
+  if (props.account.isDirty) {
+    const savedAccount = {
+      id: props.account.id,
+      isDirty: false,
+      ...form.values,
+    };
+    return emmit("saveAccount", savedAccount);
+  }
+  const editedAccount = { ...props.account, ...form.values };
+  emmit("editAccount", editedAccount);
+};
 </script>
 
 <template>
@@ -69,16 +57,26 @@ watch(
   >
     <template #customAutoForm="{ fields }">
       <div class="grid grid-cols-4 grid-rows-[auto_1fr] gap-[10px] w-[50%]">
-        <AutoFormField v-bind="fields.tag" />
-        <AutoFormField v-bind="fields.recordType" />
+        <AutoFormField
+          v-bind="fields.tag"
+          @blur="handleCheckField"
+        />
+        <AutoFormField
+          v-bind="fields.recordType"
+          @update:model-value="handleCheckField"
+        />
         <AutoFormField
           v-bind="fields.login"
           :class="{
             'col-span-2': form.values.recordType === 'LDAP',
           }"
+          @blur="handleCheckField"
         />
         <div v-if="form.values.recordType !== 'LDAP'">
-          <AutoFormField v-bind="fields.password" />
+          <AutoFormField
+            v-bind="fields.password"
+            @blur="handleCheckField"
+          />
         </div>
       </div>
     </template>
