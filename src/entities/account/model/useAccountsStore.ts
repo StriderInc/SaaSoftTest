@@ -1,11 +1,11 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import type { IAccount } from "./types";
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
 
 export const useAccountsStore = defineStore("accounts", () => {
-  const accounts = ref<IAccount[]>([
+  const savedAccounts = ref<IAccount[]>([
     {
       id: uuidv4(),
       tag: "TAG1",
@@ -21,8 +21,25 @@ export const useAccountsStore = defineStore("accounts", () => {
       password: "wert",
     },
   ]);
+  const draftAccounts = ref<IAccount[]>([]);
+
+  const allAccounts = computed(() => [
+    ...savedAccounts.value,
+    ...draftAccounts.value,
+  ]);
+
+  const addDraftAccount = () => {
+    draftAccounts.value.push({
+      id: uuidv4(),
+      tag: "",
+      recordType: "",
+      login: "",
+      password: "",
+    });
+  };
 
   return {
-    accounts,
+    allAccounts,
+    addDraftAccount,
   };
 });
