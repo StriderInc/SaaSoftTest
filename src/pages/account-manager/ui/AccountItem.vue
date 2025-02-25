@@ -6,8 +6,8 @@ import {
   type Config,
 } from "@shared/ui/shadcn/auto-form";
 
-import { fieldConfig } from "../../config/fieldConfig";
-import { getAccountSchema } from "../../config/schema";
+import { fieldConfig } from "../config/fieldConfig";
+import { getAccountSchema } from "../config/schema";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import { z } from "zod";

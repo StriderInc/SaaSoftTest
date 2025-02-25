@@ -4,7 +4,7 @@ import { Button } from "@shared/ui/shadcn/button";
 import { Plus } from "lucide-vue-next";
 
 const accountsStore = useAccountsStore();
-const { addDraftAccount } = accountsStore;
+const { addAccount } = accountsStore;
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const { addDraftAccount } = accountsStore;
     <div class="text-xl font-medium">Учетные Записи</div>
     <Button
       variant="outline"
-      @click="addDraftAccount"
+      @click="addAccount"
     >
       <Plus />
     </Button>
