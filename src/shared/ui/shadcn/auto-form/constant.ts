@@ -1,4 +1,3 @@
-import AutoFormFieldBlock from "@shared/ui/shadcn/auto-form/AutoFormFieldBlock.vue";
 import AutoFormFieldArray from "./AutoFormFieldArray.vue";
 import AutoFormFieldBoolean from "./AutoFormFieldBoolean.vue";
 import AutoFormFieldDate from "./AutoFormFieldDate.vue";
@@ -11,7 +10,6 @@ import AutoFormFieldCustomInput from "./AutoFormFieldCustomInput.vue";
 import AutoFormFieldPasswordInput from "./AutoFormFieldPasswordInput.vue";
 
 export const INPUT_COMPONENTS = {
-  block: AutoFormFieldBlock,
   customInput: AutoFormFieldCustomInput,
   password: AutoFormFieldPasswordInput,
   date: AutoFormFieldDate,
