@@ -41,13 +41,21 @@ export const useAccountsStore = defineStore("accounts", () => {
   };
 
   const saveAccount = (newAccount: IAccount) => {
-    console.log("saveAccount");
     commitAccount(newAccount);
   };
 
   const editAccount = (editedAccount: IAccount) => {
-    console.log("editAccount");
     commitAccount(editedAccount);
+  };
+
+  const deleteAccount = (deletedAccountId: string) => {
+    accountsData.value = accountsData.value.filter(
+      oldAccount => oldAccount.id !== deletedAccountId,
+    );
+    const savedAccounts = accountsData.value.filter(
+      account => !account.isDirty,
+    );
+    localStorage.setItem("accountsData", JSON.stringify(savedAccounts));
   };
 
   return {
@@ -55,5 +63,6 @@ export const useAccountsStore = defineStore("accounts", () => {
     addAccount,
     saveAccount,
     editAccount,
+    deleteAccount,
   };
 });
