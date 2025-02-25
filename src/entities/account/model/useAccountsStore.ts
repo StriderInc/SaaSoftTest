@@ -42,19 +42,21 @@ export const useAccountsStore = defineStore("accounts", () => {
       recordType: "",
       login: "",
       password: "",
+      isDirty: true,
     });
   };
 
-  const addAccountToStorage = (newAccount: IAccount) => {
+  const saveAccount = (newAccount: IAccount) => {
+    const filterAccount = accountsData.value.filter(item => !item.isDirty);
     localStorage.setItem(
       "accountsData",
-      JSON.stringify([...accountsData.value, newAccount]),
+      JSON.stringify([...filterAccount, newAccount]),
     );
   };
 
   return {
     accounts,
     addAccount,
-    addAccountToStorage,
+    saveAccount,
   };
 });

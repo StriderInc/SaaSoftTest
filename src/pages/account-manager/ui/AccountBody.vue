@@ -10,11 +10,12 @@ const { accounts } = storeToRefs(accountsStore);
 </script>
 
 <template>
-  <EditAccount>
+  <EditAccount v-slot="{ saveAccount }">
     <AccountItem
       v-for="account in accounts"
       :key="account.id"
       :account="account"
+      @save-account="saveAccount"
     />
   </EditAccount>
 </template>

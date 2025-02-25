@@ -1,7 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAccountsStore } from "@entities/account";
+
+const accountsStore = useAccountsStore();
+const { saveAccount } = accountsStore;
+</script>
 
 <template>
-  <slot />
+  <slot :save-account="saveAccount" />
 </template>
 
 <style scoped></style>

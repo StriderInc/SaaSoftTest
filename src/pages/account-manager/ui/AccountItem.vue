@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { watch } from "vue";
+
 import type { IAccount } from "@entities/account";
 import {
   AutoForm,
@@ -17,12 +19,30 @@ interface IAccountFormProps {
 }
 
 const props = defineProps<IAccountFormProps>();
+const emmit = defineEmits(["saveAccount"]);
 
 const schema = getAccountSchema(props.account);
 
 const form = useForm({
   validationSchema: toTypedSchema(schema),
 });
+
+watch(
+  () => form.meta.value.touched,
+  () => form.validate(),
+);
+watch(
+  () => form.values,
+  async () => {
+    const { valid } = await form.validate();
+    if (valid) {
+      emmit("saveAccount", { id: props.account.id, ...form.values });
+    }
+  },
+  {
+    deep: true,
+  },
+);
 </script>
 
 <template>

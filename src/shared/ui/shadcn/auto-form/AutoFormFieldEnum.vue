@@ -20,15 +20,10 @@ defineProps<FieldProps & {
       </AutoFormLabel>
       <FormControl>
         <slot v-bind="slotProps">
-          <RadioGroup v-if="config?.component === 'radio'" :disabled="maybeBooleanishToBoolean(config?.inputProps?.disabled) ?? disabled" :orientation="'vertical'" v-bind="{ ...slotProps.componentField }">
-            <div v-for="(option, index) in options" :key="option" class="mb-2 flex items-center gap-3 space-y-0">
-              <RadioGroupItem :id="`${option}-${index}`" :value="option" />
-              <Label :for="`${option}-${index}`">{{ beautifyObjectName(option) }}</Label>
-            </div>
-          </RadioGroup>
-
-          <Select v-else :disabled="maybeBooleanishToBoolean(config?.inputProps?.disabled) ?? disabled" v-bind="{ ...slotProps.componentField }">
-            <SelectTrigger class="w-full">
+          <Select :disabled="maybeBooleanishToBoolean(config?.inputProps?.disabled) ?? disabled" v-bind="{ ...slotProps.componentField }">
+            <SelectTrigger class="w-full" :class="{
+            'border-red-500': slotProps.errors.length,
+          }">
               <SelectValue :placeholder="config?.inputProps?.placeholder" />
             </SelectTrigger>
             <SelectContent>
@@ -39,11 +34,6 @@ defineProps<FieldProps & {
           </Select>
         </slot>
       </FormControl>
-
-      <FormDescription v-if="config?.description">
-        {{ config.description }}
-      </FormDescription>
-      <FormMessage />
     </FormItem>
   </FormField>
 </template>

@@ -4,4 +4,5 @@ export interface IAccount {
   recordType: "Локальная" | "LDAP" | "";
   login: string;
   password: string | null;
+  isDirty?: boolean | undefined;
 }
