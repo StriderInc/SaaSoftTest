@@ -36,11 +36,13 @@ watch(
   async () => {
     const { valid } = await form.validate();
     if (!valid) return;
+
     if (form.values.recordType === "LDAP") {
       form.values.password = null;
     } else if (!form.values.password) {
       return form.setFieldError("password", "err");
     }
+
     if (props.account.isDirty) {
       const savedAccount = {
         id: props.account.id,
