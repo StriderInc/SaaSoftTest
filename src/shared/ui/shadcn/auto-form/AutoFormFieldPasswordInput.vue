@@ -42,14 +42,16 @@ const toggleShowPassword = () => (passwordIsShow.value = !passwordIsShow.value);
           @click.stop.prevent="toggleShowPassword"
           class="absolute right-[10px] top-[10px] cursor-pointer select-none"
         >
-          <Eye
-            class="h-[18px]"
-            v-if="passwordIsShow"
-          />
-          <EyeOff
-            class="h-[18px]"
-            v-else
-          />
+          <div v-if="slotProps.componentField.modelValue">
+            <Eye
+              class="h-[18px]"
+              v-if="passwordIsShow"
+            />
+            <EyeOff
+              class="h-[18px]"
+              v-else
+            />
+          </div>
         </div>
         </div>
       </FormControl>

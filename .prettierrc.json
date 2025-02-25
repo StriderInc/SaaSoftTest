@@ -8,5 +8,6 @@
   "arrowParens": "avoid",
   "singleAttributePerLine": true,
   "arrayExpand": false,
-  "singleQuote": false
+  "singleQuote": false,
+  "endOfLine": "auto"
 }

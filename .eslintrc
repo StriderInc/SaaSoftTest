@@ -34,6 +34,9 @@
           "error",
           {
             "singleQuote": false
+          },
+          {
+            "endOfLine": "auto"
           }
         ],
         "quotes": [
