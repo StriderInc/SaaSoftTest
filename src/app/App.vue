@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { AccountManager } from "@pages/account-manager";
 </script>
 
 <template>
-  <div>Hello</div>
+  <AccountManager />
 </template>
