@@ -1,8 +1,7 @@
 import type { Ref } from "vue";
 
-import { preprocessAccounts } from "@entities/account/lib/utils";
-
 import type { IAccount, ISavedAccount } from "../model/types";
+import { preprocessAccounts } from "./utils";
 
 export const commitAccount = (
   accountsData: Ref<IAccount[]>,
