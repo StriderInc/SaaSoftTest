@@ -1,7 +1,7 @@
 import type { Ref } from "vue";
 
-import type { IAccount, ISavedAccount } from "../model/types";
-import { preprocessAccounts } from "./utils";
+import type { IAccount } from "../model/types";
+import { preprocessAccounts, preprocessSavedAccounts } from "./utils";
 
 export const commitAccount = (
   accountsData: Ref<IAccount[]>,
@@ -10,19 +10,7 @@ export const commitAccount = (
   accountsData.value = accountsData.value.map(oldAccount =>
     oldAccount.id === account.id ? account : oldAccount,
   );
-  const savedAccounts = accountsData.value.reduce(
-    (accum: ISavedAccount[], account: IAccount) => {
-      if (!account.isDirty) {
-        const tagArr = account.tag.split(";").map(tag => ({
-          text: tag.trim(),
-        }));
-        const accountCopy = { ...account, tag: tagArr };
-        return [...accum, accountCopy];
-      }
-      return accum;
-    },
-    [],
-  );
+  const savedAccounts = preprocessSavedAccounts(accountsData);
   localStorage.setItem("accountsData", JSON.stringify(savedAccounts));
 };
 

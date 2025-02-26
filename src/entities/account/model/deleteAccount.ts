@@ -1,5 +1,6 @@
 import type { Ref } from "vue";
 
+import { preprocessSavedAccounts } from "../lib/utils";
 import type { IAccount } from "./types";
 
 export const handleDeleteAccount = (
@@ -9,6 +10,6 @@ export const handleDeleteAccount = (
   accountsData.value = accountsData.value.filter(
     oldAccount => oldAccount.id !== deletedAccountId,
   );
-  const savedAccounts = accountsData.value.filter(account => !account.isDirty);
+  const savedAccounts = preprocessSavedAccounts(accountsData);
   localStorage.setItem("accountsData", JSON.stringify(savedAccounts));
 };
