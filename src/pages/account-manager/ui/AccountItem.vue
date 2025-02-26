@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import AccountValidateErrorTooltip from "@pages/account-manager/ui/AccountValidateErrorTooltip.vue";
 import { DeleteAccount } from "@features/delete-account";
 import type { IAccount } from "@entities/account";
 import {
@@ -9,6 +8,7 @@ import {
   AutoFormField,
   type Config,
 } from "@shared/ui/shadcn/auto-form";
+import AccountValidateErrorTooltip from "./AccountValidateErrorTooltip.vue";
 
 import { fieldConfig } from "../config/fieldConfig";
 import { getAccountSchema } from "../config/schema";
