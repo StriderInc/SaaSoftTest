@@ -7,10 +7,10 @@ interface IBaseAccount {
   recordType: "Локальная" | "LDAP" | "";
   login: string;
   password: string | null;
+  isDirty: boolean;
 }
 
 export interface IAccount extends IBaseAccount {
-  isDirty: boolean;
   tag: string;
 }
 

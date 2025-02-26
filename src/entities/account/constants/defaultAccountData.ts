@@ -1,7 +1,7 @@
 import type { IAccount } from "../model/types";
 import { v4 as uuidv4 } from "uuid";
 
-export const defaultAccountData: IAccount[] = [
+export const DEFAULT_ACCOUNT_DATA: IAccount[] = [
   {
     id: uuidv4(),
     tag: "TAG1",
