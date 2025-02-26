@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { computed } from "vue";
+
+import AccountValidateErrorTooltip from "@pages/account-manager/ui/AccountValidateErrorTooltip.vue";
 import { DeleteAccount } from "@features/delete-account";
 import type { IAccount } from "@entities/account";
 import {
@@ -12,7 +15,6 @@ import { getAccountSchema } from "../config/schema";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import { z } from "zod";
-
 interface IAccountFormProps {
   account: IAccount;
 }
@@ -28,6 +30,9 @@ const form = useForm({
 
 const handleCheckField = async () => {
   const { valid } = await form.validate();
+  if (!form.values.recordType) {
+    form.setFieldError("password", "Пароль не может быть пустым");
+  }
   if (!valid) return;
   if (form.values.recordType === "LDAP") {
     form.setFieldValue("password", null);
@@ -48,6 +53,10 @@ const handleCheckField = async () => {
 const handleDeleteAccount = (deletedId: string) => {
   emmit("deleteAccount", deletedId);
 };
+
+const massagesErrors = computed<string[]>(() =>
+  Object.values(form.errors.value),
+);
 </script>
 
 <template>
@@ -59,8 +68,13 @@ const handleDeleteAccount = (deletedId: string) => {
   >
     <template #customAutoForm="{ fields }">
       <div
-        class="grid grid-cols-[1fr_1fr_1fr_1fr_max-content] grid-rows-[auto_1fr] gap-[10px] w-[50%]"
+        class="grid grid-cols-[1fr_1fr_1fr_1fr_max-content] grid-rows-[auto_1fr] gap-[10px] w-[50%] relative"
       >
+        <AccountValidateErrorTooltip
+          v-if="massagesErrors.length"
+          class="absolute left-[-30px] top-[6px]"
+          :massages="massagesErrors"
+        />
         <AutoFormField
           v-bind="fields.tag"
           @blur="handleCheckField"

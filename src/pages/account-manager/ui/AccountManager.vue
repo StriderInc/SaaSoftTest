@@ -5,9 +5,11 @@ import AccountHeader from "./AccountHeader.vue";
 </script>
 
 <template>
-  <AddAccount />
-  <AccountHeader />
-  <AccountBody />
+  <div>
+    <AddAccount />
+    <AccountHeader />
+    <AccountBody />
+  </div>
 </template>
 
 <style scoped></style>

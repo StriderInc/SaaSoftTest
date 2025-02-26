@@ -4,7 +4,9 @@ import AccountTagTooltip from "./AccountTagTooltip.vue";
 
 <template>
   <div class="flex items-center justify-center">
-    <div class="grid grid-cols-4 grid-rows-[auto_1fr] gap-[5px] w-[50%]">
+    <div
+      class="grid grid-cols-[1fr_1fr_1fr_1fr_24px] grid-rows-[auto_1fr] gap-[10px] w-[50%]"
+    >
       <div class="flex items-center justify-start gap-3">
         <span>Метки</span>
         <AccountTagTooltip />
@@ -12,6 +14,7 @@ import AccountTagTooltip from "./AccountTagTooltip.vue";
       <span>Тип записи</span>
       <span>Логин</span>
       <span>Пароль</span>
+      <div />
     </div>
   </div>
 </template>

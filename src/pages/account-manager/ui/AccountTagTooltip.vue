@@ -10,7 +10,7 @@ import { CircleHelp } from "lucide-vue-next";
 
 <template>
   <TooltipProvider>
-    <Tooltip>
+    <Tooltip :disable-closing-trigger="true">
       <TooltipTrigger class="cursor-pointer">
         <CircleHelp />
       </TooltipTrigger>
