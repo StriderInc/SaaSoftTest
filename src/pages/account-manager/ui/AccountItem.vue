@@ -12,9 +12,12 @@ import AccountValidateErrorTooltip from "./AccountValidateErrorTooltip.vue";
 
 import { fieldConfig } from "../config/fieldConfig";
 import { getAccountSchema } from "../config/schema";
+import { checkField } from "../model/checkField";
+import { deleteAccount } from "../model/deleteAccount";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import { z } from "zod";
+
 interface IAccountFormProps {
   account: IAccount;
 }
@@ -28,31 +31,10 @@ const form = useForm({
   validationSchema: toTypedSchema(schema),
 });
 
-const handleCheckField = async () => {
-  const { valid } = await form.validate();
-  if (!form.values.recordType) {
-    form.setFieldError("password", "Пароль не может быть пустым");
-  }
-  if (!valid) return;
-  if (form.values.recordType === "LDAP") {
-    form.setFieldValue("password", null);
-  }
+const handleCheckField = () => checkField(form, props.account, emmit);
 
-  if (props.account.isDirty) {
-    const savedAccount = {
-      id: props.account.id,
-      isDirty: false,
-      ...form.values,
-    };
-    return emmit("saveAccount", savedAccount);
-  }
-  const editedAccount = { ...props.account, ...form.values };
-  emmit("editAccount", editedAccount);
-};
-
-const handleDeleteAccount = (deletedId: string) => {
-  emmit("deleteAccount", deletedId);
-};
+const handleDeleteAccount = (deletedId: string) =>
+  deleteAccount(deletedId, emmit);
 
 const massagesErrors = computed<string[]>(() =>
   Object.values(form.errors.value),
